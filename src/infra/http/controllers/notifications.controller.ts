@@ -1,8 +1,8 @@
+import { Body, Controller, Param, Patch, Post } from '@nestjs/common';
+
 import { CancelNotification } from '@app/use-cases/cancel-notification';
 import { ReadNotification } from '@app/use-cases/read-notification';
 import { SendNotification } from '@app/use-cases/send-notification';
-import { Body, Controller, Param, Patch, Post } from '@nestjs/common';
-
 import { CreateNotificationRequest } from '@infra/http/requests';
 import { NotificationResource } from '@infra/http/resources';
 
