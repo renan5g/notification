@@ -1,4 +1,5 @@
 import { NotificationsRepository } from '@app/repositories';
+import { Injectable } from '@nestjs/common';
 import { NotificationNotFound } from './errors';
 
 interface ReadNotificationRequest {
@@ -7,6 +8,7 @@ interface ReadNotificationRequest {
 
 type ReadNotificationResponse = void;
 
+@Injectable()
 export class ReadNotification {
   constructor(private notificationsRepository: NotificationsRepository) {}
 
