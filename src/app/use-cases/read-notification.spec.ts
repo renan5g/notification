@@ -1,8 +1,8 @@
 import { describe, expect, it } from 'vitest';
 
-import { NotificationNotFound } from '@app/use-cases/errors';
-import { makeNotification } from '@test/factories/notification';
-import { InMemoryNotificationsRepository } from '@test/repositories/in-memory-notifications-repository';
+import { makeNotification } from '@test/factories';
+import { InMemoryNotificationsRepository } from '@test/repositories';
+import { NotificationNotFound } from './errors';
 import { ReadNotification } from './read-notification';
 
 describe('Read notification', () => {

@@ -1,7 +1,7 @@
-import { makeNotification } from '@test/factories/notification';
-import { InMemoryNotificationsRepository } from '@test/repositories/in-memory-notifications-repository';
+import { makeNotification } from '@test/factories';
+import { InMemoryNotificationsRepository } from '@test/repositories';
 import { CancelNotification } from './cancel-notification';
-import { NotificationNotFound } from './errors/notification-not-found';
+import { NotificationNotFound } from './errors';
 
 import { describe, expect, it } from 'vitest';
 

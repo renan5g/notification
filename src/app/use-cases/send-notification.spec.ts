@@ -1,6 +1,6 @@
 import { describe, expect, it } from 'vitest';
 
-import { InMemoryNotificationsRepository } from '@test/repositories/in-memory-notifications-repository';
+import { InMemoryNotificationsRepository } from '@test/repositories';
 import { SendNotification } from './send-notification';
 
 describe('Send notification', () => {

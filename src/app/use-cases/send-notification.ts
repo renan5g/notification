@@ -1,6 +1,5 @@
-import { NotificationsRepository } from '@app/repositories/notifications-repository';
-import { Content } from '@domain/notification/content';
-import { Notification } from '@domain/notification/notification';
+import { NotificationsRepository } from '@app/repositories';
+import { Content, Notification } from '@domain/entities';
 
 interface SendNotificationRequest {
   recipientId: string;

@@ -1,5 +1,5 @@
-import { NotificationsRepository } from '@app/repositories/notifications-repository';
-import { NotificationNotFound } from '@app/use-cases/errors';
+import { NotificationsRepository } from '@app/repositories';
+import { NotificationNotFound } from './errors';
 
 interface CancelNotificationRequest {
   notificationId: string;
