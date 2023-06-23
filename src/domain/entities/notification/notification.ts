@@ -75,16 +75,20 @@ export class Notification {
 
   public read() {
     this.props.readAt = new Date();
-    this.props.updatedAt = new Date();
+    this.touch();
   }
 
   public unread() {
     this.props.readAt = null;
-    this.props.updatedAt = new Date();
+    this.touch();
   }
 
   public cancel() {
     this.props.canceledAt = new Date();
+    this.touch();
+  }
+
+  public touch() {
     this.props.updatedAt = new Date();
   }
 }
