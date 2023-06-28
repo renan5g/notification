@@ -1,7 +1,7 @@
-import { Replace } from '@core/helpers';
+import { Entity, UniqueEntityID } from '@core/entities';
 import { Content } from './content';
 
-import { randomUUID } from 'node:crypto';
+import { Optional } from '@core/types';
 
 export interface NotificationProps {
   recipientId: string;
@@ -13,26 +13,7 @@ export interface NotificationProps {
   updatedAt: Date;
 }
 
-export class Notification {
-  private _id: string;
-  private props: NotificationProps;
-
-  constructor(
-    props: Replace<NotificationProps, { createdAt?: Date; updatedAt?: Date }>,
-    id?: string
-  ) {
-    this._id = id ?? randomUUID();
-    this.props = {
-      ...props,
-      createdAt: props.createdAt ?? new Date(),
-      updatedAt: props.updatedAt ?? new Date(),
-    };
-  }
-
-  public get id() {
-    return this._id;
-  }
-
+export class Notification extends Entity<NotificationProps> {
   public set recipientId(recipientId: string) {
     this.props.recipientId = recipientId;
   }
@@ -75,16 +56,36 @@ export class Notification {
 
   public read() {
     this.props.readAt = new Date();
-    this.props.updatedAt = new Date();
+    this.touch();
   }
 
   public unread() {
     this.props.readAt = null;
-    this.props.updatedAt = new Date();
+    this.touch();
   }
 
   public cancel() {
     this.props.canceledAt = new Date();
+    this.touch();
+  }
+
+  private touch() {
     this.props.updatedAt = new Date();
+  }
+
+  static create(
+    props: Optional<NotificationProps, 'createdAt' | 'updatedAt'>,
+    id?: UniqueEntityID
+  ) {
+    const notification = new Notification(
+      {
+        ...props,
+        createdAt: props.createdAt ?? new Date(),
+        updatedAt: props.updatedAt ?? new Date(),
+      },
+      id
+    );
+
+    return notification;
   }
 }

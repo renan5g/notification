@@ -1,10 +1,11 @@
+import { UniqueEntityID } from '@core/entities';
 import { Content, Notification } from '@domain/entities';
 import { Notification as RawNotification } from '@prisma/client';
 
 export class PrismaNotificationMapper {
   static toPrisma(notification: Notification) {
     return {
-      id: notification.id,
+      id: notification.id.toString(),
       category: notification.category,
       content: notification.content.value,
       recipientId: notification.recipientId,
@@ -14,16 +15,16 @@ export class PrismaNotificationMapper {
   }
 
   static toDomain(raw: RawNotification): Notification {
-    return new Notification(
+    return Notification.create(
       {
         category: raw.category,
-        content: new Content(raw.content),
+        content: Content.create(raw.content),
         recipientId: raw.recipientId,
         readAt: raw.readAt,
         canceledAt: raw.canceledAt,
         createdAt: raw.createdAt,
       },
-      raw.id
+      new UniqueEntityID(raw.id)
     );
   }
 }

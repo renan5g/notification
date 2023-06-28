@@ -1,30 +1,53 @@
-import { Body, Controller, Param, Patch, Post } from '@nestjs/common';
+import { Body, Controller, Get, Param, Patch, Post } from '@nestjs/common';
 
-import { CancelNotification } from '@app/use-cases/cancel-notification';
-import { ReadNotification } from '@app/use-cases/read-notification';
-import { SendNotification } from '@app/use-cases/send-notification';
+import {
+  CancelNotification,
+  GetNotification,
+  ReadNotification,
+  SendNotification,
+} from '@application/use-cases';
 import { CreateNotificationRequest } from '@infra/http/requests';
 import { NotificationResource } from '@infra/http/resources';
 
 @Controller('notifications')
 export class NotificationsController {
   constructor(
+    private getNotification: GetNotification,
     private sendNotification: SendNotification,
     private cancelNotification: CancelNotification,
     private readNotification: ReadNotification
   ) {}
 
+  @Get(':id')
+  async show(@Param('id') id: string) {
+    const { notification } = await this.getNotification.execute({
+      notificationId: id,
+    });
+
+    return {
+      notification: NotificationResource.toHTTP(notification),
+    };
+  }
+
   @Patch(':id/cancel')
   async cancel(@Param('id') id: string) {
-    await this.cancelNotification.execute({
+    const { notification } = await this.getNotification.execute({
       notificationId: id,
+    });
+
+    await this.cancelNotification.execute({
+      notification,
     });
   }
 
   @Patch(':id/read')
   async read(@Param('id') id: string) {
-    await this.readNotification.execute({
+    const { notification } = await this.getNotification.execute({
       notificationId: id,
+    });
+
+    await this.readNotification.execute({
+      notification,
     });
   }
 

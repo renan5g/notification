@@ -1,15 +1,12 @@
+import { DatabaseModule } from '@infra/database/database.module';
 import { Module } from '@nestjs/common';
 
-import { CancelNotification } from '@app/use-cases/cancel-notification';
-import { ReadNotification } from '@app/use-cases/read-notification';
-import { SendNotification } from '@app/use-cases/send-notification';
-import { DatabaseModule } from '@infra/database/database.module';
-
-import { NotificationsController } from './controllers/notifications.controller';
+import * as UseCases from '@application/use-cases';
+import * as Controllers from './controllers';
 
 @Module({
   imports: [DatabaseModule],
-  controllers: [NotificationsController],
-  providers: [SendNotification, CancelNotification, ReadNotification],
+  controllers: [...Object.values(Controllers)],
+  providers: [...Object.values(UseCases)],
 })
 export class HttpModule {}

@@ -20,8 +20,11 @@
     "strictPropertyInitialization": false,
     "forceConsistentCasingInFileNames": false,
     "noFallthroughCasesInSwitch": false,
+    "types": [
+      "vitest/globals"
+    ],
     "paths": {
-      "@app/*": ["./src/app/*"],
+      "@application/*": ["./src/application/*"],
       "@domain/*": ["./src/domain/*"],
       "@core/*": ["./src/core/*"],
       "@infra/*": ["./src/infra/*"],
